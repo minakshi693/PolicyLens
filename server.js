@@ -6,7 +6,10 @@ import pdfParse from "pdf-parse";
 import OpenAI from "openai";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+}));
 app.use(express.json());
 
 const upload = multer({ dest: "uploads/" });

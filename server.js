@@ -12,7 +12,7 @@ app.use(express.json());
 const upload = multer({ dest: "uploads/" });
 
 const openai = new OpenAI({
-  apiKey: "YOUR_OPENAI_API_KEY",
+  apiKey: "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",
 });
 
 app.post("/analyze", upload.single("file"), async (req, res) => {

@@ -9,7 +9,11 @@ async function uploadFile() {
     method: "POST",
     body: formData,
   });
+const text = await res.text();
+console.log("RAW RESPONSE:", text);
 
+const data = JSON.parse(text);
+  
   const data = await res.json();
   document.getElementById("output").innerText = data.result;
 }

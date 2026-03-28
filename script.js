@@ -16,32 +16,34 @@ window.uploadFile = async function () {
       body: formData,
     });
 
-    const text = await res.text();
-    console.log("RAW RESPONSE:", text);
+    // ✅ Check if response is OK
+    if (!res.ok) {
+      throw new Error("Server error: " + res.status);
+    }
 
-    const data = JSON.parse(text);
+    // ✅ Ensure it's JSON
+    const contentType = res.headers.get("content-type");
 
-    document.getElementById("output").innerText = data.result;
+    if (!contentType || !contentType.includes("application/json")) {
+      const text = await res.text();
+      console.error("Non-JSON response:", text);
+      throw new Error("Server did not return JSON");
+    }
+
+    const data = await res.json();
+
+    // ✅ Handle backend error
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
+    // ✅ Show result
+    document.getElementById("output").innerText =
+      data.result ||
+      JSON.stringify(data, null, 2);
 
   } catch (err) {
-    console.error(err);
-    alert("Error occurred");
+    console.error("ERROR:", err);
+    alert(err.message);
   }
-};async function uploadFile() {
-  const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
-
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const res = await fetch("https://policylens-n29k.onrender.com", {
-    method: "POST",
-    body: formData,
-  });
-const text = await res.text();
-console.log("RAW RESPONSE:", text);
-
-const parsedData = JSON.parse(text); // ✅ new name
-
-document.getElementById("output").innerText = parsedData.result;
-}
+};

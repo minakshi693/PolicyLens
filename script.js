@@ -5,7 +5,7 @@ async function uploadFile() {
   const formData = new FormData();
   formData.append("file", file);
 
-  const res = await fetch("YOUR_BACKEND_URL/analyze", {
+  const res = await fetch("http://localhost:5000/analyze", {
     method: "POST",
     body: formData,
   });

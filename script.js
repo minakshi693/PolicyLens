@@ -12,8 +12,7 @@ async function uploadFile() {
 const text = await res.text();
 console.log("RAW RESPONSE:", text);
 
-const data = JSON.parse(text);
-  
-  const data = await res.json();
-  document.getElementById("output").innerText = data.result;
+const parsedData = JSON.parse(text); // ✅ new name
+
+document.getElementById("output").innerText = parsedData.result;
 }

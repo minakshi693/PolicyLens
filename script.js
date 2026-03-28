@@ -5,7 +5,7 @@ async function uploadFile() {
   const formData = new FormData();
   formData.append("file", file);
 
-  const res = await fetch("http://localhost:5000/analyze", {
+  const res = await fetch("https://policylens-n29k.onrender.com", {
     method: "POST",
     body: formData,
   });
